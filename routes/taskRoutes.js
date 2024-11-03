@@ -1,6 +1,6 @@
 taskRoutes = (req,res)=>{
     if(req.method === 'GET'){
-        getTask(req,res)
+        getTasks(req,res)
     }
     else if(req.method === 'POST'){
         createTask(req,res)
