@@ -29,11 +29,13 @@ exports.createTasks = (req,res)=>{
             image: files.image  ? `/uploads/${files.image.name}` : null,
 
         }
-
+        
         tasks.push(newTask);
         writeTasksTofile(tasks);
 
-       
+        if(files.image){
+            copyFileSync(files.image.path, path.join(__dirname, '../uploads', files.image.name))
+        }
     })
 
 
