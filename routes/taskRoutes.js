@@ -1,4 +1,4 @@
-const { getTasks } = require("../controllers/taskcontrollers")
+const { getTasks, updateTask, deleteTask } = require("../controllers/taskcontrollers")
 
 taskRoutes = (req,res)=>{
     if(req.method === 'GET'){
@@ -7,10 +7,10 @@ taskRoutes = (req,res)=>{
     else if(req.method === 'POST'){
         createTask(req,res)
     }else if(req.method === 'PATCH'){
-        updateTask(req,res)
+        updateTaskteTask(req,res)
         }
        else if (req.method === 'DELETE'){
-        deleteTask(req,res)
+        deleteTasksk(req,res)
        }
 
        else{
