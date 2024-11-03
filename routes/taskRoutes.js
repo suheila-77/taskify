@@ -1,6 +1,8 @@
+const { getTasks } = require("../controllers/taskcontrollers")
+
 taskRoutes = (req,res)=>{
     if(req.method === 'GET'){
-        getTasks(req,res)
+        getTasksasks(req,res)
     }
     else if(req.method === 'POST'){
         createTask(req,res)
