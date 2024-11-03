@@ -6,3 +6,13 @@ const fs = require ("fs")
  const writeTasksTofile = (tasks)=>{
     fs.writeFileSync(filepath, JSON.stringify(tasks))
  }
+
+ const readTasksFromFile = ()=>{
+    if(!fs.existsSync(filepath)){
+        writeTasksTofile
+    }
+
+    const data = fs.readFileSync(filepath);
+    return JSON.parse(data)
+
+ }
