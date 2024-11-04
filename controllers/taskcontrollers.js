@@ -1,7 +1,7 @@
-const formidable = require("formidable");
-const fs = require("fs");
-const path = require("path");
+const { IncomingForm } = require('formidable');
 const { readTasksFromFile, writeTasksToFile } = require("../utils/fileHandler");
+const { copyFileSync } = require('fs');
+const path = require('path');
 
 exports.getTasks = (req, res) => {
     const tasks = readTasksFromFile();
@@ -10,8 +10,7 @@ exports.getTasks = (req, res) => {
 };
 
 exports.createTask = (req, res) => {
-    const form = formidable(); 
-
+    const form = new IncomingForm();
     form.parse(req, (err, fields, files) => {
         if (err) {
             res.writeHead(400, { 'content-type': 'application/json' });
@@ -21,8 +20,10 @@ exports.createTask = (req, res) => {
             return;
         }
 
-        const image = files.image ? files.image[0] : null;
+        const image = files.image ? files.image : null;
+
         const tasks = readTasksFromFile();
+
         const newTask = {
             id: Date.now(),
             title: fields.title,
@@ -35,7 +36,7 @@ exports.createTask = (req, res) => {
         writeTasksToFile(tasks);
 
         if (image) {
-            fs.copyFileSync(image.filepath, path.join(__dirname, '../uploads', image.originalFilename));
+            copyFileSync(image.filepath, path.join(__dirname, '../uploads', image.originalFilename));
         }
 
         res.writeHead(200, { 'content-type': 'application/json' });
