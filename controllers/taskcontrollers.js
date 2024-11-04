@@ -1,56 +1,56 @@
-const IncomingForm = require("formidable");
-const { readTasksFromFile, writeTasksTofile } = require("../utils/fileHandler")
+const formidable = require("formidable");
+const fs = require("fs");
+const path = require("path");
+const { readTasksFromFile, writeTasksToFile } = require("../utils/fileHandler");
 
-exports.getTasks=(req,res)=>{
-  const tasks = readTasksFromFile();
-  res.writeHead(200, {'content-type': 'application/json'})
-  res.end(JSON.stringify(tasks))
-}
+exports.getTasks = (req, res) => {
+    const tasks = readTasksFromFile();
+    res.writeHead(200, { 'content-type': 'application/json' });
+    res.end(JSON.stringify(tasks));
+};
 
+exports.createTask = (req, res) => {
+    const form = formidable(); 
 
-exports.createTasks = (req,res)=>{
-    const form = new IncomingForm()
-    form.parse(req,(err, fields,files)=>{
-        if(err){
-            res.writehead(400, {'content-type': 'appliction/json'}),
-                res.end(JSON.stringify({
-                    message: "Eror parsing form"
-                }))
-                return;
-            
+    form.parse(req, (err, fields, files) => {
+        if (err) {
+            res.writeHead(400, { 'content-type': 'application/json' });
+            res.end(JSON.stringify({
+                message: 'Error parsing form'
+            }));
+            return;
         }
 
-        const tasks = readTasksFromFile()
-        const newTasks = {
-            id: date.now(),
+        const image = files.image ? files.image[0] : null;
+        const tasks = readTasksFromFile();
+        const newTask = {
+            id: Date.now(),
             title: fields.title,
-            description : fields?.description || '',
-            status : fields?.status || 'pending',
-            image: files.image  ? `/uploads/${files.image.name}` : null,
+            description: fields.description || '',
+            status: fields.status || 'pending',
+            image: image ? `/uploads/${image.originalFilename}` : null,
+        };
 
-        }
-        
         tasks.push(newTask);
-        writeTasksTofile(tasks);
+        writeTasksToFile(tasks);
 
-        if(files.image){
-            copyFileSync(files.image.path, path.join(__dirname, '../uploads', files.image.name))
-            res.end(JSON.stringify(newTasks))
+        if (image) {
+            fs.copyFileSync(image.filepath, path.join(__dirname, '../uploads', image.originalFilename));
         }
-    })
 
+        res.writeHead(200, { 'content-type': 'application/json' });
+        res.end(JSON.stringify(newTask));
+    });
+};
 
-}
-
-exports.updateTask = (req,res)=>{
+exports.updateTask = (req, res) => {
     res.end(JSON.stringify({
         message: 'Not yet implemented'
-    }))
-}
+    }));
+};
 
-
-exports.deleteTask = (req,res)=>{
+exports.deleteTask = (req, res) => {
     res.end(JSON.stringify({
         message: 'Not yet implemented'
-    }))
-}
+    }));
+};
