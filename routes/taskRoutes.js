@@ -2,15 +2,15 @@ const { getTasks, updateTask, deleteTask } = require("../controllers/taskcontrol
 
 taskRoutes = (req,res)=>{
     if(req.method === 'GET'){
-        getTasksasks(req,res)
+        getTasks(req,res)
     }
     else if(req.method === 'POST'){
         createTask(req,res)
     }else if(req.method === 'PATCH'){
-        updateTaskteTask(req,res)
+        updateTask(req,res)
         }
        else if (req.method === 'DELETE'){
-        deleteTasksk(req,res)
+        deleteTask(req,res)
        }
 
        else{

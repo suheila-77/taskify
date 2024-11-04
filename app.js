@@ -6,12 +6,12 @@ const PORT = 7000
 
 const server = http.createServer((req,res)=>{
   if(req.url=='/tasks'){
-    taskRoutes(re,res)
+    taskRoutes(req,res)
   }
   else{
     res.writeHead(404, 'Not Found', {'content-type': 'application/JSON'})
     res.end(JSON.stringify({
-        message: "you lost"
+        message: "sorry you got lost"
       }))
   }
  
@@ -19,5 +19,5 @@ const server = http.createServer((req,res)=>{
 
 
 server.listen(PORT, HOSTName,()=>{
-    console.log(`the erver port is running on ${Port}`)
+    console.log(`the Server port is running on ${PORT}`)
 })

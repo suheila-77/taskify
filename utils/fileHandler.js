@@ -9,7 +9,7 @@ const fs = require ("fs")
 
  exports.readTasksFromFile = ()=>{
     if(!fs.existsSync(filepath)){
-        writeTasksTofile
+        this.writeTasksTofile([])
     }
 
     const data = fs.readFileSync(filepath);
