@@ -1,4 +1,4 @@
-const { getTasks, updateTask,  createTask } = require("../controllers/taskcontrollers")
+const { getTasks, updateTask, deleteTask, createTask } = require("../controllers/taskcontrollers")
 
 taskRoutes = (req,res)=>{
     if(req.method === 'GET'){
